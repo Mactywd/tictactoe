@@ -44,7 +44,7 @@ def ai(difficulty, icon_ai):
 			for j in range(3):
 				if board[i][j] == '':
 					board[i][j] = ai_icon
-					score = minimax(board, is_maximizing, depth)
+					score = minimax(board, is_maximizing, depth, -20, 20)
 					board[i][j] = ''
 					if score > best_score:
 						best_score = score
@@ -55,7 +55,7 @@ def ai(difficulty, icon_ai):
 	board[move[0]][move[1]] = ai_icon
 
 
-def minimax(board, is_maximizing, depth):
+def minimax(board, is_maximizing, depth, alpha, beta):
 	end = c.game_ended()
 	if end:
 		return scores[end]
@@ -68,9 +68,12 @@ def minimax(board, is_maximizing, depth):
 			for j in range(3):
 				if board[i][j] == '':
 					board[i][j] = ai_icon
-					evaluation = minimax(board, False, depth-1)
+					evaluation = minimax(board, False, depth-1, alpha, beta)
 					board[i][j] = ''
 					max_eval = max(evaluation, max_eval)
+					alpha = max(evaluation, alpha)
+					if beta < alpha:
+						break
 
 		return max_eval
 
@@ -80,8 +83,11 @@ def minimax(board, is_maximizing, depth):
 			for j in range(3):
 				if board[i][j] == '':
 					board[i][j] = player_icon
-					evaluation = minimax(board, True, depth-1)
+					evaluation = minimax(board, True, depth-1, alpha, beta)
 					board[i][j] = ''
 					min_eval = min(evaluation, min_eval)
+					beta = min(evaluation, beta)
+					if beta < alpha:
+						break
 
 		return min_eval
