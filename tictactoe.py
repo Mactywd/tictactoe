@@ -89,8 +89,7 @@ def player_move(row, col, play_index):
 
 def ai_move(play_index):
 	curr_player = players[play_index]
-
-	print(players_type[play_index], curr_player)
+	
 	minimax.ai(players_type[play_index], curr_player)
 	end_game()
 
@@ -130,11 +129,6 @@ def mainloop():
 					column = (mouse_y // (h//3))
 					if config.board[column][row] == '':
 						player_ready = True
-
-
-
-
-			
 
 		# Drawing on screen
 

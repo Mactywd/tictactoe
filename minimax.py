@@ -4,11 +4,24 @@ from math import inf as infinity
 
 player_icon, ai_icon = 'X', 'O'
 
+scores = {}
+
 def ai(difficulty, icon_ai):
-	global player_icon, ai_icon
+	global player_icon, ai_icon, scores
 	is_maximizing = False
-	ai_icon = icon_ai
-	player_icon = 'X' if ai_icon == 'O' else 'O'
+	if icon_ai == 'O':
+		ai_icon = 'O'
+		player_icon = 'X'
+	elif icon_ai == 'X':
+		ai_icon = 'X'
+		player_icon = 'O'
+
+	scores = {
+		"tie": 0,
+		player_icon: -10,
+		ai_icon: 10
+	}
+
 	board = c.board
 	move = []
 	
@@ -41,11 +54,6 @@ def ai(difficulty, icon_ai):
 	move = random.choice(move)
 	board[move[0]][move[1]] = ai_icon
 
-scores = {
-	player_icon: -10,
-	ai_icon: 10,
-	'tie': 0
-}
 
 def minimax(board, is_maximizing, depth):
 	end = c.game_ended()
